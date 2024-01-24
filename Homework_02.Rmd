@@ -1,0 +1,12 @@
+---
+title: "Homework_02"
+author: "Kelsey Soule"
+date: "2024-01-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+homework from lab 2
