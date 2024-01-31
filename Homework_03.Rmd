@@ -91,11 +91,14 @@ Camponotus,herculeanus,10.5,3
 Myrmica,punctiventris,12.2,4
 Lasius,neoniger,3.3,55
 
-FIND:
-REPLACE:
+FIND:(\w)\w*,(\w*,)\d*.\d*,(\d*)
+REPLACE:\1_\2\3
 
 RESULT:
-
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55
 ```
 This regular expression... 
 
@@ -108,11 +111,14 @@ Camponotus,herculeanus,10.5,3
 Myrmica,punctiventris,12.2,4
 Lasius,neoniger,3.3,55
 
-FIND:
-REPLACE:
+FIND:(\w)\w*,(\w{4})\w*.\d*.\d*(,\d*)
+REPLACE:\1_\2\3
 
 RESULT:
-
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55
 ```
 This regular expression... 
 
@@ -125,10 +131,13 @@ Camponotus,herculeanus,10.5,3
 Myrmica,punctiventris,12.2,4
 Lasius,neoniger,3.3,55
 
-FIND:
-REPLACE:
+FIND:(\w{3})\w*,(\w{3})\w*,(\d*.\d*),(\d*)
+REPLACE:\1\2, \4, \3
 
 RESULT:
-
+Campen, 44, 10.2
+Camher, 3, 10.5
+Myrpun, 4, 12.2
+Lasneo, 55, 3.3
 ```
 This regular expression... 

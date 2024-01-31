@@ -411,6 +411,9 @@ RESULT:
 0003 Winder Slide.mp3 
 0004 Walking Cane.mp3</code></pre>
 <p>This regular expression…</p>
+</div>
+<div id="section-3" class="section level3">
+<h3>4.</h3>
 <pre><code>STRING:
 0001 Georgia Horseshoe.mp3 
 0002 Billy In The Lowground.mp3 
@@ -427,52 +430,58 @@ Winder Slide_0003.mp3
 Walking Cane_0004.mp3</code></pre>
 <p>This regular expression…</p>
 </div>
-<div id="section-3" class="section level3">
-<h3>4.</h3>
-<pre><code>STRING:
-
-
-FIND:
-REPLACE:
-
-RESULT:
-</code></pre>
-<p>This regular expression…</p>
-</div>
 <div id="section-4" class="section level3">
 <h3>5.</h3>
 <pre><code>STRING:
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
 
-
-FIND:
-REPLACE:
+FIND:(\w)\w*,(\w*,)\d*.\d*,(\d*)
+REPLACE:\1_\2\3
 
 RESULT:
-</code></pre>
+C_pennsylvanicus,44
+C_herculeanus,3
+M_punctiventris,4
+L_neoniger,55</code></pre>
 <p>This regular expression…</p>
 </div>
 <div id="section-5" class="section level3">
 <h3>6.</h3>
 <pre><code>STRING:
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
 
-
-FIND:
-REPLACE:
+FIND:(\w)\w*,(\w{4})\w*.\d*.\d*(,\d*)
+REPLACE:\1_\2\3
 
 RESULT:
-</code></pre>
+C_penn,44
+C_herc,3
+M_punc,4
+L_neon,55</code></pre>
 <p>This regular expression…</p>
 </div>
 <div id="section-6" class="section level3">
 <h3>7.</h3>
 <pre><code>STRING:
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
 
-
-FIND:
-REPLACE:
+FIND:(\w{3})\w*,(\w{3})\w*,(\d*.\d*),(\d*)
+REPLACE:\1\2, \4, \3
 
 RESULT:
-</code></pre>
+Campen, 44, 10.2
+Camher, 3, 10.5
+Myrpun, 4, 12.2
+Lasneo, 55, 3.3</code></pre>
 <p>This regular expression…</p>
 </div>
 
