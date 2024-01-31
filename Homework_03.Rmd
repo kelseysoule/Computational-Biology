@@ -60,7 +60,7 @@ RESULT:
 0003 Winder Slide.mp3 
 0004 Walking Cane.mp3
 ```
-This regular expression...
+This regular expression includes the first number string, then grabs the song name and mps extension. I set it to require at least two words, because that was the minimum amount of words in a song title for the given list. The other words used an asterisk which mean zero or more, so they could or couldn't be there. I went up to 4 possible words. 
 
 ### 4.
 
@@ -80,7 +80,7 @@ Billy In The Lowground_0002.mp3
 Winder Slide_0003.mp3 
 Walking Cane_0004.mp3
 ```
-This regular expression... 
+This regular expression grabs the number string, then grabs the song title *before* the mp3 extension, and separately grabs the mps extension. This way I could reorder the pieces in the desired way.
 
 ### 5.
 
@@ -100,7 +100,7 @@ C_herculeanus,3
 M_punctiventris,4
 L_neoniger,55
 ```
-This regular expression... 
+This regular expression grabs the first letter of the first word, then includes the rest of the word. Then it grabs the entire second word, and only the last number. It only grabs these things with parentheses because that was all we needed for the desired result. You have to include the parts you don't want to grab so that you can still highlight the whole line.
 
 ### 6. 
 
@@ -120,7 +120,7 @@ C_herc,3
 M_punc,4
 L_neon,55
 ```
-This regular expression... 
+This regular expression grabs the first letter of the first word, then includes the rest of the word. Then it grabs the first four letters of the second word. Again, only the last number is grabbed.
 
 ### 7.
 
@@ -140,4 +140,4 @@ Camher, 3, 10.5
 Myrpun, 4, 12.2
 Lasneo, 55, 3.3
 ```
-This regular expression... 
+This regular expression grabs the first three letters of each word. It grabs the two numbers separately so that they can be reordered in REPLACE.
