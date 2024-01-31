@@ -1,0 +1,134 @@
+---
+title: "Homework_03"
+author: "Kelsey Soule"
+date: "2024-01-31"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 1.
+
+```
+STRING:
+First String    Second      1.22      3.4
+Second          More Text   1.555555  2.2220
+Third           x           3         124
+
+FIND:\s{2,}  
+REPLACE:,
+
+RESULT:
+First String,Second,1.22,3.4
+Second,More Text,1.555555,2.2220
+Third,x,3,124
+```
+The above regular expression worked to grab 2 or more spaces. I set it to be 2 or more so that it wouldn't pick up the single space between the phrase 'First String'. Then I could replace the spaces with a comma.
+
+### 2.
+
+```
+STRING:
+Ballif, Bryan, University of Vermont
+Ellison, Aaron, Harvard Forest
+Record, Sydne, Bryn Mawr
+
+FIND:(\w+),\s*(\w+), (.*)  
+REPLACE:\2 \1 (\3)
+
+RESULT:
+Bryan Ballif (University of Vermont)
+Aaron Ellison (Harvard Forest)
+Sydne Record (Bryn Mawr)
+```
+The first piece of the regular expression grabs the first word, and saves it so it can be referred to in REPLACE. Then I account for the comma and space that I don't want to keep. Then I grabbed the next word in the string, and put it in parentheses so I could refer to it in REPLACE. I accounted for the other comma and space I don't want to keep, and grabbed all the rest, which was the University name. 
+
+### 3.
+
+```
+STRING:
+0001 Georgia Horseshoe.mp3 0002 Billy In The Lowground.mp3 0003 Winder Slide.mp3 0004 Walking Cane.mp3
+
+FIND:\d+ (\w+ \w+\s*\w*\s*\w*\.\w+ )
+REPLACE:\1 \2\n
+
+RESULT:
+0001 Georgia Horseshoe.mp3 
+0002 Billy In The Lowground.mp3 
+0003 Winder Slide.mp3 
+0004 Walking Cane.mp3
+```
+This regular expression...
+
+### 4.
+
+```
+STRING:
+0001 Georgia Horseshoe.mp3 
+0002 Billy In The Lowground.mp3 
+0003 Winder Slide.mp3 
+0004 Walking Cane.mp3
+
+FIND:(\d+) (\w+ \w+\s*\w*\s*\w*)(\.\w+)
+REPLACE:\2_\1\3
+
+RESULT:
+Georgia Horseshoe_0001.mp3 
+Billy In The Lowground_0002.mp3 
+Winder Slide_0003.mp3 
+Walking Cane_0004.mp3
+```
+This regular expression... 
+
+### 5.
+
+```
+STRING:
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+
+FIND:
+REPLACE:
+
+RESULT:
+
+```
+This regular expression... 
+
+### 6. 
+
+```
+STRING:
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+
+FIND:
+REPLACE:
+
+RESULT:
+
+```
+This regular expression... 
+
+### 7.
+
+```
+STRING:
+Camponotus,pennsylvanicus,10.2,44
+Camponotus,herculeanus,10.5,3
+Myrmica,punctiventris,12.2,4
+Lasius,neoniger,3.3,55
+
+FIND:
+REPLACE:
+
+RESULT:
+
+```
+This regular expression... 
