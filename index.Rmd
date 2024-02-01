@@ -12,6 +12,6 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### This webpage will be used for the homework for Computational Biology.
 
-[Homework 2](Homework_02.html)
+[Homework 2](Homework_02.html) - Markdown
 
 [Homework 3](Homework_03.html) - Regular Expressions
