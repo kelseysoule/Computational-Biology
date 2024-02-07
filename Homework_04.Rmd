@@ -104,3 +104,13 @@ print(queue)
 which(queue=="aphid")
 ```
 
+### 5.
+Use R to create a vector of all of the integers from 1 to 100 that are not divisible by 2, 3, or 7.
+
+```{r}
+vect <- seq(1:100)
+vect %% 2 != 0 & vect %% 3 !=0 & vect %% 7 !=0
+vect <- which(vect %% 2 != 0 & vect %% 3 !=0 & vect %% 7 !=0)
+print(vect)
+```
+
