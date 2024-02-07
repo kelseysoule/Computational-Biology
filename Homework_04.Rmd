@@ -58,9 +58,49 @@ print(c)
 Create a vector of two random uniform numbers. In a spatial map, these can be interpreted as x and y coordinates that give the location of an individual (such as a marked forest tree in a plot that has been mapped). Using one of R’s inverse trigonometry functions (`asin()`, `acos()`, or `atan()`), convert these numbers into polar coordinates.
 
 ```{r}
-x <- runif(2,min = 0,max = 10)
-print(x)
+coord <- runif(2,min = 0,max = 10)
+print(coord)
 
+r <- sqrt((coord[1])^2 + (coord[2])^2)
 
+theta <- atan((coord[2])/(coord[1]))
+polar <- c(r,theta)
+print(polar)
+```
+
+### 4. 
+Create a vector queue <- c("sheep", "fox", "owl", "ant") where queue represents the animals that are lined up to enter Noah’s Ark, with the sheep at the front of the line. Using R expressions, update queue as:
+
+a. the serpent arrives and gets in line;
+b. the sheep enters the ark;
+c. the donkey arrives and talks his way to the front of the line;
+d. the serpent gets impatient and leaves;
+e. the owl gets bored and leaves;
+f. the aphid arrives and the ant invites him to cut in line.
+g. Finally, determine the position of the aphid in the line.
+
+```{r}
+queue <- c("sheep", "fox", "owl", "ant")
+print(queue)
+
+queue <- c(queue,"serpent")
+print(queue)
+
+queue <- setdiff(queue,"sheep")
+print(queue)
+
+queue <- c("donkey",queue)
+print(queue)
+
+queue <- setdiff(queue,"serpent")
+print(queue)
+
+queue <- setdiff(queue,"owl")
+print(queue)
+
+queue <- c(queue[1:2],"aphid",queue[3])
+print(queue)
+
+which(queue=="aphid")
 ```
 

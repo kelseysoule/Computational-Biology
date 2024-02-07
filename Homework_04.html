@@ -410,9 +410,54 @@ of an individual (such as a marked forest tree in a plot that has been
 mapped). Using one of R’s inverse trigonometry functions
 (<code>asin()</code>, <code>acos()</code>, or <code>atan()</code>),
 convert these numbers into polar coordinates.</p>
-<pre class="r"><code>x &lt;- runif(2,min = 0,max = 10)
-print(x)</code></pre>
-<pre><code>## [1] 4.3629848 0.8568695</code></pre>
+<pre class="r"><code>coord &lt;- runif(2,min = 0,max = 10)
+print(coord)</code></pre>
+<pre><code>## [1] 6.840690 3.010994</code></pre>
+<pre class="r"><code>r &lt;- sqrt((coord[1])^2 + (coord[2])^2)
+
+theta &lt;- atan((coord[2])/(coord[1]))
+polar &lt;- c(r,theta)
+print(polar)</code></pre>
+<pre><code>## [1] 7.4740298 0.4146404</code></pre>
+</div>
+<div id="section-3" class="section level3">
+<h3>4.</h3>
+<p>Create a vector queue &lt;- c(“sheep”, “fox”, “owl”, “ant”) where
+queue represents the animals that are lined up to enter Noah’s Ark, with
+the sheep at the front of the line. Using R expressions, update queue
+as:</p>
+<ol style="list-style-type: lower-alpha">
+<li>the serpent arrives and gets in line;</li>
+<li>the sheep enters the ark;</li>
+<li>the donkey arrives and talks his way to the front of the line;</li>
+<li>the serpent gets impatient and leaves;</li>
+<li>the owl gets bored and leaves;</li>
+<li>the aphid arrives and the ant invites him to cut in line.</li>
+<li>Finally, determine the position of the aphid in the line.</li>
+</ol>
+<pre class="r"><code>queue &lt;- c(&quot;sheep&quot;, &quot;fox&quot;, &quot;owl&quot;, &quot;ant&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;sheep&quot; &quot;fox&quot;   &quot;owl&quot;   &quot;ant&quot;</code></pre>
+<pre class="r"><code>queue &lt;- c(queue,&quot;serpent&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;sheep&quot;   &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code>queue &lt;- setdiff(queue,&quot;sheep&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code>queue &lt;- c(&quot;donkey&quot;,queue)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot;  &quot;fox&quot;     &quot;owl&quot;     &quot;ant&quot;     &quot;serpent&quot;</code></pre>
+<pre class="r"><code>queue &lt;- setdiff(queue,&quot;serpent&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;owl&quot;    &quot;ant&quot;</code></pre>
+<pre class="r"><code>queue &lt;- setdiff(queue,&quot;owl&quot;)
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;ant&quot;</code></pre>
+<pre class="r"><code>queue &lt;- c(queue[1:2],&quot;aphid&quot;,queue[3])
+print(queue)</code></pre>
+<pre><code>## [1] &quot;donkey&quot; &quot;fox&quot;    &quot;aphid&quot;  &quot;ant&quot;</code></pre>
+<pre class="r"><code>which(queue==&quot;aphid&quot;)</code></pre>
+<pre><code>## [1] 3</code></pre>
 </div>
 
 
