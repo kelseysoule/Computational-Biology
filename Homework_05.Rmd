@@ -1,0 +1,109 @@
+---
+title: "Homework_05"
+author: "Kelsey Soule"
+date: "2024-02-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+### 1. 
+
+Assign to the variable n_dims a single random integer between 3 and 10.  
+
+* Create a vector of consecutive integers from 1 to n_dims^2.  
+* Use the sample function to randomly reshuffle these values.  
+* create a square matrix with these elements.  
+* print out the matrix.  
+* find a function in r to transpose the matrix.  
+* print it out again and note how it has changed.  
+* calculate the sum and the mean of the elements in the first row and then the last row.  
+* read about the eigen() function and use it on your matrix.  
+* look carefully at the elements of $values and $vectors in the output. What kind of numbers are these?  
+* dig in with the typeof() function to figure out their type.  
+* if have set your code up properly, you should be able to re-run it and create a matrix of different size because n_dims will change.  
+```{r}
+n_dims <- sample(3:10,1)
+
+vec <- c(1:(n_dims)^2)
+
+sample(vec)
+
+matr <- matrix(data = vec, nrow = n_dims)
+
+print(matr)
+
+matr <- t(matr)
+
+print(matr)
+
+sum(matr[1,])
+mean(matr[1,])
+sum(matr[n_dims,])
+mean(matr[n_dims,])
+
+eigen(matr)
+```
+The `$values` are eigenvalues of the matrix which are the characteristic roots of the matrix, and they are scalar. The `$vectors` are the eigenvectors of the matrix, and are vectors so they are not scalar and have direction.
+```{r}
+typeof(eigen(matr)$values)
+typeof(eigen(matr)$vectors)
+# these are complex numbers
+```
+
+### 2. 
+Create a list with the following named elements:
+
+* my_matrix, which is a 4 x 4 matrix filled with random uniform values
+* my_logical which is a 100-element vector of TRUE or FALSE values. Do this efficiently by setting up a vector of random values and then applying an inequality to it.  
+* my_letters, which is a 26-element vector of all the lower-case letters in random order.  
+
+Then, complete the following steps:
+
+* create a new list, which has the element[2,2] from the matrix, the second element of the logical vector, and the second element of the letters vector.  
+* use the typeof() function to confirm the underlying data types of each component in this list
+* combine the underlying elements from the new list into a single atomic vector with the c() function.
+* what is the data type of this vector?
+
+```{r}
+mylist <- list(my_matrix=matrix(data = runif(16),nrow = 4), my_logical=(runif(100))<0.5, my_letters=sample(letters))
+print(mylist)
+
+newlist <- list(mylist$my_matrix[2,2], mylist$my_logical[2], mylist$my_letters[2])
+print(newlist) 
+
+typeof(newlist[[1]])
+typeof(newlist[[2]])
+typeof(newlist[[3]])
+
+myvec <- c(newlist[[1]],newlist[[2]],newlist[[3]])
+typeof(myvec)
+```
+
+### 3. 
+Create a data frame with the two variables (= columns) and 26 cases (= rows) below:
+
+* call the first variable my_unis and fill it with 26 random uniform values from 0 to 10  
+* call the second variable my_letters and fill it with 26 capital letters in random order.  
+* for the first variable, use a single line of code in R to select 4 random rows and replace the numerical values in those rows with NA.  
+* for the first variable, write a single line of R code to identify which rows have the missing values.  
+* re-order the entire data frame to arrange the second variable in alphabetical order. 
+* calculate the column mean for the first variable.
+
+```{r}
+myframe <- data.frame(my_unis=runif(26,min = 0,max = 10),my_letters=sample(LETTERS))
+print(myframe)
+
+myframe[sample(1:26,4),1]<-NA
+
+which(is.na(myframe$my_unis))
+
+arrange(myframe,my_letters)
+
+mean(myframe$my_unis,na.rm = TRUE)
+
+```
+
