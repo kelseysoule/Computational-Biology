@@ -20,3 +20,4 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [Homework 5](Homework_05.html) - Matrices, Lists, & Data Frames
 
+[Homework 6](Homework_06.html) - Simulating and Fitting Data Distributions
