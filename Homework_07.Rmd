@@ -23,7 +23,7 @@ nGroup <- 3 # number of treatment groups
 nName <- c("Summer","Winter", "Spring") # names of groups
 nSize <- c(80,50,100) # number of observations in each group
 nMean <- c(1,-5,0) # mean temp of each group, centered on modal temperature
-nSD <- c(4,7,3) # standard deviation of each group
+nSD <- c(3,5,3) # standard deviation of each group
 ```
 
 I made the sample sizes higher in warmer seasons to reflect the fact that lizards are more active in these seasons, and would then be more likely to be able to capture more lizards in the field. The means, centered on modal temperature, reflect the difference in typical temperature based on season, and based on the original paper.
@@ -121,4 +121,11 @@ Write up your results in a markdown file, organized with headers and different c
 
 If you have time, try repeating this exercise with one of the more sophisticated distributions, such as the gamma or negative binomial (depending on the kind of data you have). You will have to spend some time figuring out by trial and error the parameter values you will need to generate appropriate means and variances of the different groups.
 
-try beta
+trying beta distribution
+
+```{r}
+myBeta <- rbeta(n=1000,shape1=5,shape2 = 2)
+qplot(myBeta,xlim=c(0,1), color=I("black"),fill=I("orchid"))
+
+```
+
