@@ -11,9 +11,9 @@
 
 <meta name="author" content="Kelsey Soule" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-03-27" />
 
-<title>index</title>
+<title>Homework 8</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,27 +350,127 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">index</h1>
+<h1 class="title toc-ignore">Homework 8</h1>
 <h4 class="author">Kelsey Soule</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-03-27</h4>
 
 </div>
 
 
-<div id="this-webpage-will-be-used-for-the-homework-for-computational-biology." class="section level3">
-<h3>This webpage will be used for the homework for Computational
-Biology.</h3>
-<p><a href="Homework_02.html">Homework 2</a> - Markdown</p>
-<p><a href="Homework_03.html">Homework 3</a> - Regular Expressions</p>
-<p><a href="Homework_04.html">Homework 4</a> - Atomic Vectors</p>
-<p><a href="Homework_05.html">Homework 5</a> - Matrices, Lists, &amp;
-Data Frames</p>
-<p><a href="Homework_06.html">Homework 6</a> - Simulating and Fitting
-Data Distributions</p>
-<p><a href="Homework_07.html">Homework 7</a> - Creating Fake Data Sets
-to Explore Hypotheses</p>
-<p><a href="Homework_08.html">Homework 8</a> - Data manipulations using
-the <code>dplyr</code> package</p>
+<div id="data-manipulations-using-the-dplyr-package" class="section level2">
+<h2>Data manipulations using the <code>dplyr</code> package</h2>
+<pre class="r"><code>library(sqldf)
+library(dplyr)
+library(tidyverse)
+data(&quot;iris&quot;)</code></pre>
+<div id="examine-the-structure-of-the-iris-data-set.-how-many-observations-and-variables-are-in-the-data-set" class="section level3">
+<h3>1. Examine the structure of the iris data set. How many observations
+and variables are in the data set?</h3>
+<pre class="r"><code>str(iris)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>There are 150 observations and 5 variables.</p>
+</div>
+<div id="create-a-new-data-frame-iris1-that-contains-only-the-species-virginica-and-versicolor-with-sepal-lengths-longer-than-6-cm-and-sepal-widths-longer-than-2.5-cm.-how-many-observations-and-variables-are-in-the-data-set" class="section level3">
+<h3>2. Create a new data frame iris1 that contains only the species
+virginica and versicolor with sepal lengths longer than 6 cm and sepal
+widths longer than 2.5 cm. How many observations and variables are in
+the data set?</h3>
+<pre class="r"><code>iris1 &lt;- filter(iris, Species %in% c(&quot;virginica&quot;, &quot;versicolor&quot;), Sepal.Length &gt; 6, Sepal.Width &gt; 2.5)</code></pre>
+<p>There are 56 observations of 5 variables.</p>
+</div>
+<div id="now-create-a-iris2-data-frame-from-iris1-that-contains-only-the-columns-for-species-sepal.length-and-sepal.width.-how-many-observations-and-variables-are-in-the-data-set" class="section level3">
+<h3>3. Now, create a iris2 data frame from iris1 that contains only the
+columns for Species, Sepal.Length, and Sepal.Width. How many
+observations and variables are in the data set?</h3>
+<pre class="r"><code>iris2 &lt;- select(iris1, -(Petal.Length:Petal.Width))</code></pre>
+<p>There are 56 observations of 3 variables.</p>
+</div>
+<div id="create-an-iris3-data-frame-from-iris2-that-orders-the-observations-from-largest-to-smallest-sepal-length.-show-the-first-6-rows-of-this-data-set." class="section level3">
+<h3>4. Create an iris3 data frame from iris2 that orders the
+observations from largest to smallest sepal length. Show the first 6
+rows of this data set.</h3>
+<pre class="r"><code>iris3 &lt;- arrange(iris2, by=desc(Sepal.Length))
+head(iris3)</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width   Species
+## 1          7.9         3.8 virginica
+## 2          7.7         3.8 virginica
+## 3          7.7         2.6 virginica
+## 4          7.7         2.8 virginica
+## 5          7.7         3.0 virginica
+## 6          7.6         3.0 virginica</code></pre>
+</div>
+<div id="create-an-iris4-data-frame-from-iris3-that-creates-a-column-with-a-sepal-area-length-width-value-for-each-observation.-how-many-observations-and-variables-are-in-the-data-set" class="section level3">
+<h3>5. Create an iris4 data frame from iris3 that creates a column with
+a sepal area (length * width) value for each observation. How many
+observations and variables are in the data set?</h3>
+<pre class="r"><code>iris4 &lt;- mutate(iris3, Sepal.Area=Sepal.Length*Sepal.Width)</code></pre>
+<p>There are 56 observations of 4 variables.</p>
+</div>
+<div id="create-iris5-that-calculates-the-average-sepal-length-the-average-sepal-width-and-the-sample-size-of-the-entire-iris4-data-frame-and-print-iris5." class="section level3">
+<h3>6. Create iris5 that calculates the average sepal length, the
+average sepal width, and the sample size of the entire iris4 data frame
+and print iris5.</h3>
+<pre class="r"><code>iris5 &lt;- summarize(iris4, avgLength=mean(Sepal.Length), avgWidth=mean(Sepal.Width), Totalnumber=n())
+print(iris5)</code></pre>
+<pre><code>##   avgLength avgWidth Totalnumber
+## 1  6.698214 3.041071          56</code></pre>
+</div>
+<div id="finally-create-iris6-that-calculates-the-average-sepal-length-the-average-sepal-width-and-the-sample-size-for-each-species-of-in-the-iris4-data-frame-and-print-iris6." class="section level3">
+<h3>7. Finally, create iris6 that calculates the average sepal length,
+the average sepal width, and the sample size for each species of in the
+iris4 data frame and print iris6.</h3>
+<pre class="r"><code>iris6 &lt;- summarize(iris4, avgLength=mean(Sepal.Length), avgWidth=mean(Sepal.Width), sizeVirginica=length(which(iris4$Species==&quot;virginica&quot;)), sizeVersicolor=length(which(iris4$Species==&quot;versicolor&quot;)))
+print(iris6)</code></pre>
+<pre><code>##   avgLength avgWidth sizeVirginica sizeVersicolor
+## 1  6.698214 3.041071            39             17</code></pre>
+</div>
+<div id="in-these-exercises-you-have-successively-modified-different-versions-of-the-data-frame-iris1-iris2-iris3-iris4-iris5-iris6.-at-each-stage-the-output-data-frame-from-one-operation-serves-as-the-input-for-the-next.-a-more-efficient-way-to-do-this-is-to-use-the-pipe-operator-from-the-tidyr-package.-see-if-you-can-rework-all-of-your-previous-statements-except-for-iris5-into-an-extended-piping-operation-that-uses-iris-as-the-input-and-generates-irisfinal-as-the-output." class="section level3">
+<h3>8. In these exercises, you have successively modified different
+versions of the data frame iris1 iris2 iris3 iris4 iris5 iris6. At each
+stage, the output data frame from one operation serves as the input for
+the next. A more efficient way to do this is to use the pipe operator
+%&gt;% from the tidyr package. See if you can rework all of your
+previous statements (except for iris5) into an extended piping operation
+that uses iris as the input and generates irisFinal as the output.</h3>
+<pre class="r"><code>irisFinal &lt;- iris %&gt;%
+  filter(Species %in% c(&quot;virginica&quot;, &quot;versicolor&quot;), Sepal.Length &gt; 6, Sepal.Width &gt; 2.5) %&gt;%
+  select(-(Petal.Length:Petal.Width)) %&gt;%
+  arrange(by=desc(Sepal.Length)) %&gt;%
+  mutate(Sepal.Area=Sepal.Length*Sepal.Width)
+head(irisFinal)</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width   Species Sepal.Area
+## 1          7.9         3.8 virginica      30.02
+## 2          7.7         3.8 virginica      29.26
+## 3          7.7         2.6 virginica      20.02
+## 4          7.7         2.8 virginica      21.56
+## 5          7.7         3.0 virginica      23.10
+## 6          7.6         3.0 virginica      22.80</code></pre>
+</div>
+<div id="create-a-longer-data-frame-using-the-original-iris-data-set-with-three-columns-named-species-measure-value.-the-column-species-will-retain-the-species-names-of-the-data-set.-the-column-measure-will-include-whether-the-value-corresponds-to-sepal.length-sepal.width-petal.length-or-petal.width-and-the-column-value-will-include-the-numerical-values-of-those-measurements." class="section level3">
+<h3>9. Create a ‘longer’ data frame using the original iris data set
+with three columns named “Species”, “Measure”, “Value”. The column
+“Species” will retain the species names of the data set. The column
+“Measure” will include whether the value corresponds to Sepal.Length,
+Sepal.Width, Petal.Length, or Petal.Width and the column “Value” will
+include the numerical values of those measurements.</h3>
+<pre class="r"><code>irisLong &lt;- iris %&gt;%
+  pivot_longer(cols=Sepal.Length:Petal.Width, names_to = &quot;Measure&quot;, values_to = &quot;Values&quot;)
+head(irisLong)</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##   Species Measure      Values
+##   &lt;fct&gt;   &lt;chr&gt;         &lt;dbl&gt;
+## 1 setosa  Sepal.Length    5.1
+## 2 setosa  Sepal.Width     3.5
+## 3 setosa  Petal.Length    1.4
+## 4 setosa  Petal.Width     0.2
+## 5 setosa  Sepal.Length    4.9
+## 6 setosa  Sepal.Width     3</code></pre>
+</div>
 </div>
 
 
