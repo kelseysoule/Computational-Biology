@@ -25,3 +25,6 @@ knitr::opts_chunk$set(echo = TRUE)
 [Homework 7](Homework_07.html) - Creating Fake Data Sets to Explore Hypotheses
 
 [Homework 8](Homework_08.html) - Data manipulations using the `dplyr` package
+
+[Homework 9](Homework_09.html) - Organizing code with Structured Programming  ([Function Source File](HW_09_Functions.R))
+
