@@ -1,0 +1,130 @@
+---
+title: "Homework 10"
+author: "Kelsey Soule"
+date: "2024-04-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## For Loops and Randomization Tests
+
+#### 1. Using a for loop, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the vector. Finally, use return(counter) for the output.
+
+```{r}
+find_zeroes <- function(myvect = c(0,0,0)) {
+  counter <- 0
+  zeroes <- sum(myvect == 0)
+  for (i in 1:zeroes) {
+    counter <- counter + 1 
+  }
+  return(counter)
+}
+
+find_zeroes()
+find_zeroes(c(1,0,4,0,2,0,6,0,0,0,4,25))
+```
+
+
+#### 2. Use subsetting instead of a loop to rewrite the function as a single line of code.
+
+```{r}
+myvect = c(0,0,0)
+
+num_zeroes <- sum(myvect==0)
+print(num_zeroes)
+
+```
+
+#### 3. Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+
+```{r}
+make_matrix <- function(nrow=5, ncol=3) {
+  m <- matrix(data=0, ncol = ncol, nrow = nrow)  #not a square matrix
+  for (i in 1:nrow(m)) {
+    for (j in 1:ncol(m)) {
+      m[i,j] <- m[i,j] + i*j
+      }  # end of column j loop
+    }  # end of row i loop
+  return(m)
+  print(m)
+}
+
+make_matrix()
+make_matrix(4,3)
+```
+
+#### 4. Now let’s practice calling custom functions within for loops. Use the code from previous lectures on loops and functions to complete the following steps:
+
+a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
+
+```{r}
+# Number of samples in each group
+n <- 10
+
+# Means for each group
+group_means <- c(10, 20, 30)
+
+# Generate data for each group
+group1 <- rnorm(n, mean = group_means[1])
+group2 <- rnorm(n, mean = group_means[2])
+group3 <- rnorm(n, mean = group_means[3])
+
+# Combine data into a single data frame
+mydata <- data.frame(
+  group = rep(c("Group1", "Group2", "Group3"), each = n),
+  response = c(group1, group2, group3)
+)
+```
+
+b. Write a custom function that 1) reshuffles the response variable, and 2) calculates the mean of each group in the reshuffled data. Store the means in a vector of length 3.
+
+```{r}
+reshuffle_and_calculate_means <- function(data=mydata) {
+  # Reshuffle response variable
+  shuffled_response <- sample(data$response)
+  data$response <- shuffled_response
+  
+  # Calculate means for each group
+  means <- tapply(data$response, data$group, mean)
+  
+  return(means)
+  print(means)
+}
+
+reshuffle_and_calculate_means()
+```
+
+c. Use a for loop to repeat the function in b 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for each new group mean, for a total of 4 columns.
+
+```{r}
+newdata <- data.frame()
+for (i in 1:100) {
+  mymeans <- reshuffle_and_calculate_means()
+  newdata <- rbind(newdata, data.frame(
+    replicate = i,
+    mean1 = mymeans[1],
+    mean2 = mymeans[2],
+    mean3 = mymeans[3]
+  ))
+}
+```
+
+d. Use qplot() to create a histogram of the means for each reshuffled group. Or, if you want a challenge, use ggplot() to overlay all 3 histograms in the same figure. How do the distributions of reshuffled means compare to the original means?
+
+```{r}
+library(ggplot2)
+ggplot(data = newdata) +
+  geom_histogram(aes(x=mean1, fill="mean1"), alpha = 0.5) +
+  geom_histogram(aes(x=mean2, fill="mean2"), alpha = 0.5) +
+  geom_histogram(aes(x=mean3, fill="mean3"), alpha = 0.5) +
+  scale_fill_manual(values = c("mean1" = "red", "mean2" = "blue", "mean3" = "yellow")) +
+  labs(x= "Means", y= "count")
+
+
+ggplot(data = mydata) +
+  geom_histogram(aes(x=response), color="grey60",fill="thistle1",size=0.2)
+```
+The distribution of the original means is trimodal, which makes sense because there are only 30 observations and each group's means are normal to the overall mean of tht group. The shuffled mean distribution reflects the fact that the groups dont have such different means anymore, since they were all mixed together.
