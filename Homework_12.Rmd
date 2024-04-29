@@ -1,0 +1,103 @@
+---
+title: "Homework 12"
+author: "Kelsey Soule"
+date: "2024-04-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For this exercise, use your newly-developed ggplot chops to create some nice graphs from your own data (If you do not have a good data frame to use for graphics, use one of the many built-in data frames from R (other than mpg, which we are using in class)). Experiment with different themes, theme base sizes, aesthetics, mappings, and faceting. When you are finished, try exporting them to high quality pdfs, jpgs, eps files, or other formats that you would use for submission to a journal.
+
+In this exercise, I encourage you to improve your graphics with elements that we have not (yet) covered in ggplot. For example, can you change the labels on a facet plot so that they are more informative than the variable names that are supplied from your data frame? Can you figure out how to add text annotations, lines and arrows to your graph? Can you figure out how to use custom colors that you have chosen for your fills and lines? Your resources for these explorations are google, Stack Overflow – and your TAs!
+
+
+```{r}
+library(ggplot2)
+library(ggthemes)
+library(patchwork)
+library(wesanderson)
+devtools::install_github("hrbrmstr/ggalt")
+library(ggplot2)
+library(ggalt)
+library(ggpubr)
+
+
+d <- iris
+
+p1 <- ggplot(data = d) +
+  aes(x=Sepal.Width, y=Sepal.Length, color = Species) +
+  geom_point() +
+  geom_encircle()
+p1
+
+
+p2 <- ggplot(data = d) +
+  aes(x = Petal.Length, fill = Species) +
+  geom_density(alpha = 0.3) +
+  facet_wrap(~Species, nrow = 3) +
+  labs(x="Petal Length") +
+  theme(legend.position = "none")
+p2
+
+p3 <- ggplot(data = d) +
+  aes(x = Petal.Width, fill = Species) +
+  geom_density(alpha = 0.3) +
+  facet_wrap(~Species, nrow = 3) +
+  labs(x="Petal Width") +
+  theme(legend.position = "none")
+p3
+
+p4 <- ggplot(data = d) +
+  aes(x = Sepal.Length, fill = Species) +
+  geom_density(alpha = 0.3) +
+  facet_wrap(~Species, nrow = 3) +
+  labs(x="Sepal Length") +
+  theme(legend.position = "none")
+
+p5 <- ggplot(data = d) +
+  aes(x = Sepal.Width, fill = Species) +
+  geom_density(alpha = 0.3) +
+  facet_wrap(~Species, nrow = 3) +
+  labs(x="Sepal Width")
+
+(p2 + p3 + p4 + p5)
+
+
+# EXAMPLE
+# Compute data with principal components ------------------
+df <- iris[c(1, 2, 3, 4)]
+pca_mod <- prcomp(df)  # compute principal components
+
+# Data frame of principal components ----------------------
+df_pc <- data.frame(pca_mod$x, Species=iris$Species)  # dataframe of principal components
+df_pc_vir <- df_pc[df_pc$Species == "virginica", ]  # df for 'virginica'
+df_pc_set <- df_pc[df_pc$Species == "setosa", ]  # df for 'setosa'
+df_pc_ver <- df_pc[df_pc$Species == "versicolor", ]  # df for 'versicolor'
+ 
+# Plot ----------------------------------------------------
+ggplot(df_pc, aes(PC1, PC2, col=Species)) + 
+  geom_point(aes(shape=Species), size=2) +   # draw points
+  labs(title="Iris Clustering", 
+       subtitle="With principal components PC1 and PC2 as X and Y axis",
+       caption="Source: Iris") + 
+  coord_cartesian(xlim = 1.2 * c(min(df_pc$PC1), max(df_pc$PC1)), 
+                  ylim = 1.2 * c(min(df_pc$PC2), max(df_pc$PC2))) +   # change axis limits
+  geom_encircle(data = df_pc_vir, aes(x=PC1, y=PC2)) +   # draw circles
+  geom_encircle(data = df_pc_set, aes(x=PC1, y=PC2)) + 
+  geom_encircle(data = df_pc_ver, aes(x=PC1, y=PC2))
+#######################
+
+
+p <- ggplot(d) +
+  aes(x=Sepal.Length, y= Sepal.Width, col=Species) +
+  geom_point(aes(shape=Species), size=2) +
+  labs(title = "Iris Clustering", y = "Sepal Width", x= "Sepal Length") +
+  geom_encircle(aes(fill=Species), alpha=0.2) +
+  stat_cor(method = "pearson", position = "identity")
+  
+p
+```
+

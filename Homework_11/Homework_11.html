@@ -11,9 +11,9 @@
 
 <meta name="author" content="Kelsey Soule" />
 
-<meta name="date" content="2024-01-24" />
+<meta name="date" content="2024-04-10" />
 
-<title>index</title>
+<title>Homework 11</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -350,36 +350,203 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">index</h1>
+<h1 class="title toc-ignore">Homework 11</h1>
 <h4 class="author">Kelsey Soule</h4>
-<h4 class="date">2024-01-24</h4>
+<h4 class="date">2024-04-10</h4>
 
 </div>
 
 
-<div id="this-webpage-will-be-used-for-the-homework-for-computational-biology." class="section level3">
-<h3>This webpage will be used for the homework for Computational
-Biology.</h3>
-<p><a href="Homework_02.html">Homework 2</a> - Markdown</p>
-<p><a href="Homework_03.html">Homework 3</a> - Regular Expressions</p>
-<p><a href="Homework_04.html">Homework 4</a> - Atomic Vectors</p>
-<p><a href="Homework_05.html">Homework 5</a> - Matrices, Lists, &amp;
-Data Frames</p>
-<p><a href="Homework_06.html">Homework 6</a> - Simulating and Fitting
-Data Distributions</p>
-<p><a href="Homework_07.html">Homework 7</a> - Creating Fake Data Sets
-to Explore Hypotheses</p>
-<p><a href="Homework_08.html">Homework 8</a> - Data manipulations using
-the <code>dplyr</code> package</p>
-<p><a href="Homework_09.html">Homework 9</a> - Organizing code with
-Structured Programming (<a href="HW_09_Functions.R">Function Source
-File</a>)</p>
-<p><a href="Homework_10.html">Homework 10</a> - For Loops and
-Randomization Tests</p>
-<p><a href="Homework_11/Homework_11.html">Homework 11</a> - Batch
-Processing</p>
-<p><a href="Homework_12.html">Homework 12</a> - ggplotting</p>
-</div>
+<pre class="r"><code>library(log4r)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;log4r&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     debug</code></pre>
+<pre class="r"><code>library(TeachingDemos)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ purrr     1.0.2</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code>library(pracma)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;pracma&#39;
+## 
+## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     cross</code></pre>
+<pre class="r"><code>library(ggmosaic)
+
+source(&quot;barracudar/DataTableTemplate.R&quot;)
+source(&quot;barracudar/AddFolder.R&quot;)
+source(&quot;barracudar/BuildFunction.R&quot;)
+source(&quot;barracudar/MetaDataTemplate.R&quot;)
+source(&quot;barracudar/CreatePaddedLabel.R&quot;)
+source(&quot;barracudar/InitiateSeed.R&quot;)
+source(&quot;barracudar/SetUpLog.R&quot;)
+source(&quot;barracudar/SourceBatch.R&quot;)
+
+source(&quot;barracudar/QBox.R&quot;)
+source(&quot;barracudar/QCon1.R&quot;)
+source(&quot;barracudar/QCon2.R&quot;)
+source(&quot;barracudar/QHist.R&quot;)
+source(&quot;barracudar/QLogis.R&quot;)
+#source(&quot;barracudar/QScat.R&quot;)
+source(&quot;barracudar/QBub.R&quot;)
+source(&quot;barracudar/QContour.R&quot;)
+
+#add_folder()</code></pre>
+<p>Within each year’s folder, you will only be using a file from each
+year labeled “countdata” in its title. Using for loops, iterate through
+each year’s folders to gather the file names of these “countdata” .csv
+files.</p>
+<pre class="r"><code>files &lt;- list.files(path = &quot;~/Documents/computational biology/Homework_11/OriginalData/NEON_count-landbird&quot;, pattern = &quot;BART&quot;)
+
+
+filenames &lt;- c()
+rawdataList &lt;- list()
+for (i in 1:length(files)) {
+  setwd(paste0(&quot;~/Documents/computational biology/Homework_11/OriginalData/NEON_count-landbird&quot;, &quot;/&quot;, files[i]))
+  filenames[i] &lt;- list.files(pattern = &quot;countdata&quot;)
+  rawdataList[[i]] &lt;- read.csv(file = filenames[i])  
+}
+
+head(rawdataList[[1]])</code></pre>
+<pre><code>##                                    uid         namedLocation domainID siteID
+## 1 8f668f74-2a94-4a42-94b0-f750d27cb240 BART_025.birdGrid.brd      D01   BART
+## 2 c40e4add-e604-4af2-9b11-e2f30ae7dd03 BART_025.birdGrid.brd      D01   BART
+## 3 646fbae2-e140-4d32-9dbb-9a91011037a9 BART_025.birdGrid.brd      D01   BART
+## 4 994befcd-e830-49f7-a849-f791e31a669e BART_025.birdGrid.brd      D01   BART
+## 5 785e643e-4ba6-4069-a858-e99a78a45078 BART_025.birdGrid.brd      D01   BART
+## 6 6411a5f9-379d-4c80-a909-1163c318b431 BART_025.birdGrid.brd      D01   BART
+##     plotID    plotType pointID         startDate               eventID
+## 1 BART_025 distributed       3 2015-06-14T09:23Z BART_025.3.2015-06-14
+## 2 BART_025 distributed       3 2015-06-14T09:23Z BART_025.3.2015-06-14
+## 3 BART_025 distributed       3 2015-06-14T09:23Z BART_025.3.2015-06-14
+## 4 BART_025 distributed       3 2015-06-14T09:23Z BART_025.3.2015-06-14
+## 5 BART_025 distributed       3 2015-06-14T09:23Z BART_025.3.2015-06-14
+## 6 BART_025 distributed       2 2015-06-14T09:43Z BART_025.2.2015-06-14
+##   pointCountMinute targetTaxaPresent taxonID       scientificName taxonRank
+## 1                1                 Y    REVI      Vireo olivaceus   species
+## 2                2                 Y    BTNW     Setophaga virens   species
+## 3                1                 Y    BCCH Poecile atricapillus   species
+## 4                1                 Y    BTNW     Setophaga virens   species
+## 5                2                 Y    BAWW      Mniotilta varia   species
+## 6                4                 Y    WIWR Troglodytes hiemalis   species
+##                 vernacularName observerDistance detectionMethod
+## 1               Red-eyed Vireo                9         singing
+## 2 Black-throated Green Warbler               50         singing
+## 3       Black-capped Chickadee               42         singing
+## 4 Black-throated Green Warbler               12         singing
+## 5      Black-and-white Warbler               17         singing
+## 6                  Winter Wren               62         singing
+##   visualConfirmation sexOrAge clusterSize clusterCode identifiedBy
+## 1                 No     Male           1                    JRUEB
+## 2                 No     Male           1                    JRUEB
+## 3                 No     Male           1                    JRUEB
+## 4                 No     Male           1                    JRUEB
+## 5                 No     Male           1                    JRUEB
+## 6                 No     Male           1                    JRUEB
+##   identificationHistoryID
+## 1                      NA
+## 2                      NA
+## 3                      NA
+## 4                      NA
+## 5                      NA
+## 6                      NA</code></pre>
+<p>Starting with pseudo-code, generate functions for 1) Cleaning the
+data for any empty/missing cases, 2) Extract the year from each file
+name, 3) Calculate Abundance for each year (Total number of individuals
+found), 4) Calculate Species Richness for each year(Number of unique
+species found)</p>
+<pre class="r"><code># Pseudocode
+# clean data from NA values
+# extract year
+# calculate abundance
+# calculate species richness
+
+
+# Function to clean the data for any empty/missing cases
+clean_data &lt;- function(data = rawdataList[[1]]) {
+  # Remove rows with missing or empty values
+  cleaned_data &lt;- data[complete.cases(data$scientificName), ]
+  return(cleaned_data)
+}
+
+# Function to extract the year from each file name
+extract_year &lt;- function(file_name = &quot;NULL&quot;) {
+  # Extract year from file name
+  year &lt;- str_extract(file_name, &quot;20\\d{2}&quot;)
+  return(year)
+}
+
+# Function to calculate abundance for each year (Total number of individuals found)
+calculate_abundance &lt;- function(data = rawdataList[[1]]) {
+  # Group data by year and calculate sum of counts for each year
+  abundance &lt;- nrow(data)
+  return(abundance)
+}
+
+# Function to calculate species richness for each year (Number of unique species found)
+calculate_species_richness &lt;- function(data = rawdataList[[1]]) {
+  # Group data by year and count number of unique species for each year
+  species_richness &lt;- length(unique(data$scientificName))
+  return(species_richness)
+}</code></pre>
+<p>Create an initial empty data frame to hold the above summary
+statistics-you should have 4 columns, one for the file name, one for
+abundance, one for species richness, and one for year.</p>
+<pre class="r"><code>mydata &lt;- data.frame(
+  file_name = c(rep(0, times=length(files))),
+  year = c(rep(0, times=length(files))),
+  abundance = c(rep(0, times=length(files))),
+  species.richness = c(rep(0, times=length(files)))
+)</code></pre>
+<p>Using a for loop, run your created functions as a batch process for
+each folder, changing the working directory as necessary to read in the
+correct files, calculating summary statistics with your created
+functions, and then writing them out into your summary statistics data
+frame.</p>
+<pre class="r"><code>for (i in 1:length(rawdataList)) {
+  x &lt;- rawdataList[[i]]
+  x &lt;- clean_data(x)
+  setwd(&quot;~/Documents/computational biology/Homework_11/CleanedData&quot;)
+  file_name &lt;- paste(&quot;data&quot;, i, sep = &quot;&quot;)
+  write.csv(x, file = file_name)
+  mydata$file_name[i] &lt;- file_name
+}
+
+for (i in 1:length(rawdataList)) {
+  mydata$year[i] &lt;- extract_year(filenames[i])
+}
+
+for (i in 1:length(rawdataList)) {
+  setwd(&quot;~/Documents/computational biology/Homework_11/CleanedData&quot;)
+  mydata$abundance[i] &lt;- calculate_abundance(read_csv(mydata$file_name[i]))
+}
+
+for (i in 1:length(rawdataList)) {
+  setwd(&quot;~/Documents/computational biology/Homework_11/CleanedData&quot;)
+  mydata$species.richness[i] &lt;- calculate_species_richness(read_csv(mydata$file_name[i]))
+}</code></pre>
+<pre class="r"><code>print(mydata)</code></pre>
+<pre><code>##   file_name year abundance species.richness
+## 1     data1 2015       454               40
+## 2     data2 2016       883               39
+## 3     data3 2017       685               35
+## 4     data4 2018       772               37
+## 5     data5 2019       628               44
+## 6     data6 2020       626               46
+## 7     data7 2020        89               18
+## 8     data8 2021      1015               50
+## 9     data9 2022       699               39</code></pre>
 
 
 

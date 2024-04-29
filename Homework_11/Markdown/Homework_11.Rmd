@@ -1,0 +1,144 @@
+---
+title: "Homework 11"
+author: "Kelsey Soule"
+date: "2024-04-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(log4r)
+library(TeachingDemos)
+library(tidyverse)
+library(pracma)
+library(ggmosaic)
+
+source("barracudar/DataTableTemplate.R")
+source("barracudar/AddFolder.R")
+source("barracudar/BuildFunction.R")
+source("barracudar/MetaDataTemplate.R")
+source("barracudar/CreatePaddedLabel.R")
+source("barracudar/InitiateSeed.R")
+source("barracudar/SetUpLog.R")
+source("barracudar/SourceBatch.R")
+
+source("barracudar/QBox.R")
+source("barracudar/QCon1.R")
+source("barracudar/QCon2.R")
+source("barracudar/QHist.R")
+source("barracudar/QLogis.R")
+#source("barracudar/QScat.R")
+source("barracudar/QBub.R")
+source("barracudar/QContour.R")
+
+#add_folder()
+```
+
+Within each year’s folder, you will only be using a file from each year labeled “countdata” in its title. Using for loops, iterate through each year’s folders to gather the file names of these “countdata” .csv files.
+
+```{r}
+
+files <- list.files(path = "~/Documents/computational biology/Homework_11/OriginalData/NEON_count-landbird", pattern = "BART")
+
+
+filenames <- c()
+rawdataList <- list()
+for (i in 1:length(files)) {
+  setwd(paste0("~/Documents/computational biology/Homework_11/OriginalData/NEON_count-landbird", "/", files[i]))
+  filenames[i] <- list.files(pattern = "countdata")
+  rawdataList[[i]] <- read.csv(file = filenames[i])  
+}
+
+head(rawdataList[[1]])
+```
+
+
+Starting with pseudo-code, generate functions for 1) Cleaning the data for any empty/missing cases, 2) Extract the year from each file name, 3) Calculate Abundance for each year (Total number of individuals found), 4) Calculate Species Richness for each year(Number of unique species found)
+
+```{r}
+# Pseudocode
+# clean data from NA values
+# extract year
+# calculate abundance
+# calculate species richness
+
+
+# Function to clean the data for any empty/missing cases
+clean_data <- function(data = rawdataList[[1]]) {
+  # Remove rows with missing or empty values
+  cleaned_data <- data[complete.cases(data$scientificName), ]
+  return(cleaned_data)
+}
+
+# Function to extract the year from each file name
+extract_year <- function(file_name = "NULL") {
+  # Extract year from file name
+  year <- str_extract(file_name, "20\\d{2}")
+  return(year)
+}
+
+# Function to calculate abundance for each year (Total number of individuals found)
+calculate_abundance <- function(data = rawdataList[[1]]) {
+  # Group data by year and calculate sum of counts for each year
+  abundance <- nrow(data)
+  return(abundance)
+}
+
+# Function to calculate species richness for each year (Number of unique species found)
+calculate_species_richness <- function(data = rawdataList[[1]]) {
+  # Group data by year and count number of unique species for each year
+  species_richness <- length(unique(data$scientificName))
+  return(species_richness)
+}
+
+```
+
+
+Create an initial empty data frame to hold the above summary statistics-you should have 4 columns, one for the file name, one for abundance, one for species richness, and one for year.
+
+```{r}
+mydata <- data.frame(
+  file_name = c(rep(0, times=length(files))),
+  year = c(rep(0, times=length(files))),
+  abundance = c(rep(0, times=length(files))),
+  species.richness = c(rep(0, times=length(files)))
+)
+```
+
+
+Using a for loop, run your created functions as a batch process for each folder, changing the working directory as necessary to read in the correct files, calculating summary statistics with your created functions, and then writing them out into your summary statistics data frame.
+
+```{r, warning=FALSE, message=FALSE}
+for (i in 1:length(rawdataList)) {
+  x <- rawdataList[[i]]
+  x <- clean_data(x)
+  setwd("~/Documents/computational biology/Homework_11/CleanedData")
+  file_name <- paste("data", i, sep = "")
+  write.csv(x, file = file_name)
+  mydata$file_name[i] <- file_name
+}
+
+for (i in 1:length(rawdataList)) {
+  mydata$year[i] <- extract_year(filenames[i])
+}
+
+for (i in 1:length(rawdataList)) {
+  setwd("~/Documents/computational biology/Homework_11/CleanedData")
+  mydata$abundance[i] <- calculate_abundance(read_csv(mydata$file_name[i]))
+}
+
+for (i in 1:length(rawdataList)) {
+  setwd("~/Documents/computational biology/Homework_11/CleanedData")
+  mydata$species.richness[i] <- calculate_species_richness(read_csv(mydata$file_name[i]))
+}
+```
+
+```{r}
+print(mydata)
+```
+
+

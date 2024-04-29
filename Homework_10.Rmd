@@ -61,6 +61,8 @@ make_matrix(4,3)
 a. Simulate a dataset with 3 groups of data, each group drawn from a distribution with a different mean. The final data frame should have 1 column for group and 1 column for the response variable.
 
 ```{r}
+set.seed(23)
+
 # Number of samples in each group
 n <- 10
 

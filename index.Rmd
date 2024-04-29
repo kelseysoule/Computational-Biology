@@ -29,3 +29,7 @@ knitr::opts_chunk$set(echo = TRUE)
 [Homework 9](Homework_09.html) - Organizing code with Structured Programming  ([Function Source File](HW_09_Functions.R))
 
 [Homework 10](Homework_10.html) - For Loops and Randomization Tests
+
+[Homework 11](Homework_11/Homework_11.html) - Batch Processing
+
+[Homework 12](Homework_12.html) - ggplotting
